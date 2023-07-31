@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Toolbar from "./components/Toolbar/Toolbar";
 
-function App() {
+const App = () => {
+  const filters = ["All", "Websites", "Flayers", "Business Cards"];
+  const [state, setState] = useState("All");
+  const [active, setActive] = useState("All");
+
+  const onSelectFilter = (e) => {
+    setState((prev) => (prev = e));
+    setActive((prev) => (prev = e));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <nav>
+        {filters.map((item) => {
+          return (
+            <ul
+              className={item === active ? "active" : ""}
+              key={item}
+              onClick={() => {
+                onSelectFilter(item);
+              }}
+            >
+              {item}
+            </ul>
+          );
+        })}
+      </nav>
+      <Toolbar
+        filters={filters}
+        selected={state}
+      />
+    </>
   );
-}
+};
 
 export default App;
